@@ -1,0 +1,20 @@
+html, body{
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    width: 100%;
+}
+.nav{
+    background-color: rgb(20, 20, 20);
+    top: 0px;
+    position: fixed;
+    height: 70px;
+}
+
+.logo{
+    width: 166.5px;
+    height: 45px;
+    top: 25px;
+    left: 30px;
+}
