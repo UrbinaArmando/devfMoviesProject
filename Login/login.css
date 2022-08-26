@@ -1,0 +1,118 @@
+html, body{
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    width: 100%;
+
+}
+.container{
+    min-height: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../img/nf.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.logo{
+    width: 166.5px;
+    height: 45px;
+    position: relative;
+    top: 25px;
+    left: 30px;
+    z-index: 100;
+}
+.login{
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 5px;
+    color: rgba(256,256,256,0.5);
+    margin: 40px auto 100px;
+    padding: 70px 60px 150px;
+    width: 450px;
+}
+
+.login h2{
+    margin: 0 0 25px;
+    font-size: 30px;
+    color:#fff;
+}
+.login input{
+    color: #fff;
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    border:none;
+}
+.login input[type="text"],
+.login input[type="password"]{
+    background-color: #353535;
+    font-size: 15px;
+    margin-bottom: 20px;
+    padding: 0;
+}
+.login input[type="text"]::placeholder,
+.login input[type="password"]::placeholder{
+    padding: 5px;
+}
+
+.login input[type="submit"]{
+    margin-top: 20px;
+    background-color: red;
+    font-size: 15px;
+    font-weight: bold;
+}
+.check{
+    color: rgba(256,256,256,0.5);
+    margin-top: 10px;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.check input{
+    width: 15px;
+    height: 15px;
+}
+a{
+    color: rgba(256,256,256,0.5);
+    text-decoration: none;
+}
+.info{
+    color:blue;
+}
+.subscribe{
+    font-size: 18px;
+    font-weight: bolder;
+    color: #fff;
+}
+.footer{
+    padding: 15px 50px;
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    width: 100%;
+    height: 250px;}
+.textofooter{
+    font-size: 20px;
+    color: rgba(256,256,256,0.5);
+    position: relative;
+}
+.footerlinks{
+    padding: 0;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.linkfooter{
+    width: 25%;
+    margin-top: 30px;
+}
+.footercontainer{
+    margin: 0 auto;
+    align-items: center;
+}
+.idioma{
+    background-color: #353535;
+    color: #fff;
+}
+a[hover="true"]{
+    text-decoration: underline;
+}
