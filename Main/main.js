@@ -69,7 +69,7 @@ const mostrarPeliculas = (peliculas) => {
 
         let sinResultados = `
             <img src="assets/empty-box-256.png" class="img" alt="...">
-            <h1>No hay resultados.....</h1>             
+            <h1 id="pel">No hay resultados.....</h1>             
         `;
 
         mensaje.innerHTML = sinResultados;
@@ -91,7 +91,7 @@ const mostrarPeliculas = (peliculas) => {
                 <div class="row">
                     <div class="col clearfix">
                         <span class="float-left">${pelicula.vote_average}</span>
-                        <img src="assets/star.png" class="float-right icono" alt="...">
+                        <i class="fa fa-star" ></i>  
                     </div>
                 </div>
                 <h5 class="card-title titulo">${pelicula.title}</h5>
