@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 let API_KEY = "00fc2bd5a54d4f3669c47b17c4d7cb3e";
 const movieImage = [];
@@ -37,3 +38,13 @@ getLatestMovies().then((movies) => {
     // })
 
 
+=======
+console.log(document.getElementById("searchIcon"))
+var searchIcon = document.getElementById("searchIcon");
+var searchBox = document.getElementById("searchInput");
+
+searchIcon.addEventListener('click', (e) => {
+    searchBox.classList.toggle("active");
+    console.log('active search works');
+});
+>>>>>>> 0c6f355 (carrusel avance)
