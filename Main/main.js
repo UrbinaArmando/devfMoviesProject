@@ -1,46 +1,139 @@
-let API_KEY = "8d2ac7ee3c9c31fda2dcf263fbf976e0";
-const movieImage = [];
 
-// Funcion para obtener las pelicula recientes de la API
-async function getLatestMovies() {
-    let moviesUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`;
+let API_KEY = "00fc2bd5a54d4f3669c47b17c4d7cb3e";
+let peliculas;
+let generos;
+let actores;
 
-    try {
-        let response = await axios.get(moviesUrl);
-        return response.data.results
-    } catch (e) {
-        return []
-    }
-    console.log()
+
+const obtenerGeneros = () => {
+
+    fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=es-ES`)
+        .then(response => response.json()).then((data) => {
+
+            const todos = { id: 0, name: "Todos" }
+
+            data.genres.unshift(todos);
+            generos = data.genres;
+
+           // console.log(generos.slice(0, 15));
+
+            mostrarGeneros(generos.slice(0, 15));
+        });
 }
-// Funcion para crear los arreglos contenedores de los datos necesarios de las peliculas.
-// Ejemplo: Array "movieImage" con URLs de pelculas.
-getLatestMovies().then((movies) => {
 
-    for (let img of movies) {
+const mostrarGeneros = (generos) => {
+    document.querySelector("#generos").innerHTML = "";
 
-        movieImage.push(img.poster_path)
-        //console.log(img.poster_path)
+    for (const genero of generos) {
+
+        let carta = document.createElement("div");
+
+        carta.classList.add("card", "mt-2", "mb-2", "ms-2")
+        carta.setAttribute("style", "width: 18rem;");
+
+        let card = `
+            <div class="card-body">       
+                <h5 class="card-title titulo">${genero.name}</h5>
+            </div>               
+        `;
+
+        carta.innerHTML = card;
+        document.querySelector("#generos").append(carta);
     }
-})
-console.log(`https://api.themoviedb.org/3/movie${movieImage[0]}`);
-document.getElementById('image1').src = `https://api.themoviedb.org/3/movie${movieImage[0]}`;
+}
 
 
+const obtenerPeliculas = () => {
+
+    fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=es-ES&page=1&region=MX`)
+        .then(response => response.json()).then((data) => {
+
+            peliculas = data.results;
+
+           // console.log(peliculas.slice(0, 15));
+
+            mostrarPeliculas(peliculas.slice(0, 15));
+        });
+}
+
+const mostrarPeliculas = (peliculas) => {
+    document.querySelector("#resultados").innerHTML = "";
+
+    //Mensaje de no hay resultados
+    if (peliculas.length == 0) {
+
+        let mensaje = document.createElement("div");
+
+        mensaje.classList.add("mt-2", "mb-2", "ms-2")
+        mensaje.setAttribute("style", "width: 100rem; height: 150rem; text-align: center;");
+
+        let sinResultados = `
+            <img src="assets/empty-box-256.png" class="img" alt="...">
+            <h1 id="pel">No hay resultados.....</h1>             
+        `;
+
+        mensaje.innerHTML = sinResultados;
+        document.querySelector("#resultados").append(mensaje);
+    }
+
+    for (const pelicula of peliculas) {
+
+        let carta = document.createElement("div");
+
+        carta.classList.add("card", "mt-2", "mb-2", "ms-2")
+        carta.setAttribute("style", "width: 18rem;");
+
+        let card = `
+            <div>
+                <img src="https://image.tmdb.org/t/p/original/${pelicula.poster_path}" class="card-img-top" alt="${pelicula.title}">
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col clearfix">
+                        <span class="float-left">${pelicula.vote_average}</span>
+                        <i class="fa fa-star" ></i>  
+                    </div>
+                </div>
+                <h5 class="card-title titulo">${pelicula.title}</h5>
+               
+            </div>               
+        `;
+
+        carta.innerHTML = card;
+        document.querySelector("#resultados").append(carta);
+    }
+}
+
+//  <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary centrado" id="${pelicula.id}">Detalles</a>
+//pedazo de codigo del espacio de arriab del </div> solo. "`;"  "carta.innerHTML = card;"
+
+let buscarPelicula = (evt) => {
+    let name = document.querySelector("#searchInput").value.toLowerCase();
+    
+    let filtrados = peliculas.filter((pelicula)=>{
+        return pelicula.title.toLowerCase().includes(name);
+    });
+
+    mostrarPeliculas(filtrados);
+} 
 
 
-// getLatestMoviesImage().then((movies) => {
-//     movies.forEach(x => {
-//         const {name, year, genere, seasons, imagen} = x;
+const obtenerActores = (peliculas) => {
+    let mov = "616037";
 
-//     });
-// })
+    fetch(`https://api.themoviedb.org/3/movie/${mov}/credits?api_key=${API_KEY}&language=es-ES`)
+        .then(response => response.json()).then((data) => {
 
-/*console.log(document.getElementById("searchIcon"))
-var searchIcon = document.getElementById("searchIcon");
-var searchBox = document.getElementById("searchInput");
+            actores = data.results;
 
-searchIcon.addEventListener('click', (e) => {
-    searchBox.classList.toggle("active");
-    console.log('active search works');
-});*/
+            console.log(actores);
+        });
+
+}
+
+// Se ejecutan siempre que inicie la pagina para traer la info de la API.
+obtenerGeneros();
+obtenerPeliculas();
+//obtenerActores();
+
+document.querySelector("#searchInput").addEventListener("keyup", buscarPelicula)
