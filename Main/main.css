@@ -6,8 +6,12 @@ html, body{
     width: 100%;
    background-color: rgb(20, 20, 20);
 }
-p, h5{
+p, h5, h1{
   color: white;
+}
+.banner{
+  width: 100%;
+  height: 300px;
 }
 .nav{
     background-color: rgb(20, 20, 20);
@@ -36,7 +40,7 @@ p, h5{
     border: solid 1px rgba(255, 255, 255, 0.85);
     box-sizing: border-box;
     padding: 7px 14px 7px 40px;
-    width: 0%;
+    width: 100%;
     font-size: 13px;
     color: #fff;
     /*opacity: 0;*/
