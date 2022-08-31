@@ -19,7 +19,9 @@
     <link rel="stylesheet" href="main.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/fontawesome.min.css" integrity="sha384-X8QTME3FCg1DLb58++lPvsjbQoCT9bp3MsUU3grbIny/3ZwUJkRNO8NPW6zqzuW9" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/fontawesome.min.css"
+        integrity="sha384-X8QTME3FCg1DLb58++lPvsjbQoCT9bp3MsUU3grbIny/3ZwUJkRNO8NPW6zqzuW9" crossorigin="anonymous">
 </head>
 
 <body>
@@ -63,7 +65,8 @@
                     <!-- Search form -->
                     <div class="search-box">
                         <i class="fa fa-search search-box__icon" id="searchICon"></i>
-                        <input class="search-box__input" type="search" id="searchInput" placeholder="Título, personas, generos" />
+                        <input class="search-box__input" type="search" id="searchInput"
+                            placeholder="Título, personas, generos" />
                     </div>
 
                     <ul class="navbar-nav mb-2 mb-lg-0">
@@ -217,7 +220,7 @@
         </div>
         <div class="col">
             <div class="row" id="movieSection">
-                <h1 id="pel">PELICULAS</h1>
+                <h1 id="pel">Populares en Netflix</h1>
                 <div id="resultados" class="row justify-content-center">
 
                 </div>
@@ -225,27 +228,32 @@
         </div>
         <div class="col">
             <div class="row" id="movieGenresSection">
-                <h1 id="gen">GENEROS</h1>
+                <h1 id="gen">Generos</h1>
                 <div id="generos" class="row justify-content-center">
 
                 </div>
             </div>
         </div>
 
-<!-- Modal con info de pelicula -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="tituloModal"></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Modal con info de pelicula -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-white" id="tituloModal"></h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <img id="imagenModal">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-9" id="contenidoModal"></div>
+                            <div class="col-3" id="actoresModal"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <img id="imagenModal">
-        <div class="modal-body col-9" id="contenidoModal"></div>
-        <div class="modal col-3" id="contenidoModal"></div>
-      </div>
-    </div>
-</div>
 
 
 

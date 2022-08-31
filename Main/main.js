@@ -5,10 +5,10 @@ let generos;
 let actores;
 let carta;
 
-const tituloModal    = document.querySelector("#tituloModal");
-const contenidoModal = document.querySelector("#contenidoModal"); 
-const imagenModal    = document.querySelector("#imagenModal"); 
-const actoresModal    = document.querySelector("#actoresModal"); 
+const tituloModal = document.querySelector("#tituloModal");
+const contenidoModal = document.querySelector("#contenidoModal");
+const imagenModal = document.querySelector("#imagenModal");
+const actoresModal = document.querySelector("#actoresModal");
 
 
 const obtenerGeneros = () => {
@@ -21,7 +21,7 @@ const obtenerGeneros = () => {
             data.genres.unshift(todos);
             generos = data.genres;
 
-           // console.log(generos.slice(0, 15));
+            // console.log(generos.slice(0, 15));
 
             mostrarGeneros(generos.slice(0, 15));
         });
@@ -34,12 +34,12 @@ const mostrarGeneros = (generos) => {
 
         let carta = document.createElement("div");
 
-        carta.classList.add("card", "mt-2", "mb-2", "ms-2")
-        carta.setAttribute("style", "width: 18rem;");
+        carta.classList.add("card", "mt-2", "mb-2", "ms-2", "text-bg-dark")
+        carta.setAttribute("style", "width: 15rem;");
 
         let card = `
             <div class="card-body">       
-                <h5 class="card-title titulo">${genero.name}</h5>
+                <h5 class="card-title titulo text-white">${genero.name}</h5>
             </div>               
         `;
 
@@ -56,10 +56,10 @@ const obtenerPeliculas = () => {
 
             peliculas = data.results;
 
-           // console.log(peliculas.slice(0, 15));
+            // console.log(peliculas.slice(0, 15));
 
             mostrarPeliculas(peliculas.slice(0, 15));
-        
+
         });
 }
 
@@ -87,23 +87,23 @@ const mostrarPeliculas = (peliculas) => {
 
         let carta = document.createElement("div");
 
-        carta.classList.add("card", "mt-2", "mb-2", "ms-2")
-        carta.setAttribute("style", "width: 18rem;");
+        carta.classList.add("card", "mt-2", "mb-2", "ms-2", "p-0", "text-bg-dark")
+        carta.setAttribute("style", "width: 15rem;");
 
         let card = `
             <div>
                 <img src="https://image.tmdb.org/t/p/original/${pelicula.poster_path}" class="card-img-top" alt="${pelicula.title}">
             </div>
-            <div class="card-body">
+            <div class="card-body d-flex flex-column mb-0">
                 <div class="row">
                     <div class="col clearfix">
                         <span class="float-left">${pelicula.vote_average}</span>
                         <i class="fa fa-star" ></i>  
                     </div>
                 </div>
-                <h5 class="card-title titulo">${pelicula.title}</h5>
-                <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary centrado" id="${pelicula.id}">Detalles</a>
-            </div>               
+                <h5 class="card-title text-white titulo">${pelicula.title}</h5>
+            </div>
+            <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-secondary centrado align-self-end m-1" id="${pelicula.id}">Detalles</a>               
         `;
 
         carta.innerHTML = card;
@@ -119,36 +119,41 @@ const mostrarDetalles = (e) => {
 
         tituloModal.innerText = "";
         contenidoModal.innerText = "";
-        
-        const {title, overview, backdrop_path} = peliculas.find(p => p.id == id);
+        actoresModal.innerText = "Actores: "
 
+        const { title, overview, backdrop_path } = peliculas.find(p => p.id == id);
+        obtenerActores(id).then(() => {
+            for (let i = 0; i < 5; i++) {
+                if (i == 4) {
+                    actoresModal.innerText += `${actores[i].name}. `;
+                }
+                else {
+                    actoresModal.innerText += `${actores[i].name}, `;
+                }
+            }
+        });
         tituloModal.innerText = title;
         contenidoModal.innerText = overview;
         imagenModal.setAttribute("src", `https://image.tmdb.org/t/p/original/${backdrop_path}`);
-    
     }
 };
 
-
-
-
-
 let buscarPelicula = (evt) => {
     let name = document.querySelector("#searchInput").value.toLowerCase();
-    
-    let filtrados = peliculas.filter((pelicula)=>{
+
+    let filtrados = peliculas.filter((pelicula) => {
         return pelicula.title.toLowerCase().includes(name);
     });
 
     mostrarPeliculas(filtrados.slice(0, 15));
-} 
+}
 
 
-const obtenerActores = (pelicula) => {
-    fetch(`https://api.themoviedb.org/3/movie/${pelicula}/credits?api_key=${API_KEY}&language=es-ES`)
+let obtenerActores = async (pelicula) => {
+    await fetch(`https://api.themoviedb.org/3/movie/${pelicula}/credits?api_key=${API_KEY}&language=es-ES`)
         .then(response => response.json()).then((data) => {
             actores = data.cast.filter((res) => res['known_for_department'] == "Acting");
-            console.log(actores);
+            //console.log(actores)
         });
 }
 

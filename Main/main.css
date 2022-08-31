@@ -83,3 +83,7 @@ h1 {
 #pel {
   color: white;
 }
+.card-img-top{
+  height: 100vh;
+  object-fit: cover;
+}
