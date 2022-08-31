@@ -3,6 +3,12 @@ let API_KEY = "00fc2bd5a54d4f3669c47b17c4d7cb3e";
 let peliculas;
 let generos;
 let actores;
+let carta;
+
+const tituloModal    = document.querySelector("#tituloModal");
+const contenidoModal = document.querySelector("#contenidoModal"); 
+const imagenModal    = document.querySelector("#imagenModal"); 
+const actoresModal    = document.querySelector("#actoresModal"); 
 
 
 const obtenerGeneros = () => {
@@ -53,6 +59,7 @@ const obtenerPeliculas = () => {
            // console.log(peliculas.slice(0, 15));
 
             mostrarPeliculas(peliculas.slice(0, 15));
+        
         });
 }
 
@@ -95,7 +102,7 @@ const mostrarPeliculas = (peliculas) => {
                     </div>
                 </div>
                 <h5 class="card-title titulo">${pelicula.title}</h5>
-               
+                <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary centrado" id="${pelicula.id}">Detalles</a>
             </div>               
         `;
 
@@ -104,8 +111,27 @@ const mostrarPeliculas = (peliculas) => {
     }
 }
 
-//  <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary centrado" id="${pelicula.id}">Detalles</a>
-//pedazo de codigo del espacio de arriab del </div> solo. "`;"  "carta.innerHTML = card;"
+
+const mostrarDetalles = (e) => {
+    let id = e.target.getAttribute("id");
+
+    if (id !== null) {
+
+        tituloModal.innerText = "";
+        contenidoModal.innerText = "";
+        
+        const {title, overview, backdrop_path} = peliculas.find(p => p.id == id);
+
+        tituloModal.innerText = title;
+        contenidoModal.innerText = overview;
+        imagenModal.setAttribute("src", `https://image.tmdb.org/t/p/original/${backdrop_path}`);
+    
+    }
+};
+
+
+
+
 
 let buscarPelicula = (evt) => {
     let name = document.querySelector("#searchInput").value.toLowerCase();
@@ -114,21 +140,16 @@ let buscarPelicula = (evt) => {
         return pelicula.title.toLowerCase().includes(name);
     });
 
-    mostrarPeliculas(filtrados);
+    mostrarPeliculas(filtrados.slice(0, 15));
 } 
 
 
-const obtenerActores = (peliculas) => {
-    let mov = "616037";
-
-    fetch(`https://api.themoviedb.org/3/movie/${mov}/credits?api_key=${API_KEY}&language=es-ES`)
+const obtenerActores = (pelicula) => {
+    fetch(`https://api.themoviedb.org/3/movie/${pelicula}/credits?api_key=${API_KEY}&language=es-ES`)
         .then(response => response.json()).then((data) => {
-
-            actores = data.results;
-
+            actores = data.cast.filter((res) => res['known_for_department'] == "Acting");
             console.log(actores);
         });
-
 }
 
 // Se ejecutan siempre que inicie la pagina para traer la info de la API.
@@ -137,3 +158,4 @@ obtenerPeliculas();
 //obtenerActores();
 
 document.querySelector("#searchInput").addEventListener("keyup", buscarPelicula)
+resultados.addEventListener("click", mostrarDetalles);
