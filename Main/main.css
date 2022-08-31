@@ -84,6 +84,6 @@ h1 {
   color: white;
 }
 .card-img-top{
-  height: 100vh;
+  height: 50vh;
   object-fit: cover;
 }
