@@ -1,7 +1,7 @@
 
 let API_KEY = "00fc2bd5a54d4f3669c47b17c4d7cb3e";
 let peliculas;
-let generos;
+let generos = [];
 let actores;
 let carta;
 
@@ -11,9 +11,9 @@ const imagenModal = document.querySelector("#imagenModal");
 const actoresModal = document.querySelector("#actoresModal");
 
 
-const obtenerGeneros = () => {
+const obtenerGeneros = async () => {
 
-    fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=es-ES`)
+    await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=es-ES`)
         .then(response => response.json()).then((data) => {
 
             // const todos = { id: 0, name: "Todos" }
@@ -23,7 +23,7 @@ const obtenerGeneros = () => {
 
             // console.log(generos.slice(0, 15));
 
-            mostrarGeneros(generos.slice(0, 15));
+            //mostrarGeneros(generos.slice(0, 15));
         });
 }
 
@@ -59,7 +59,6 @@ const obtenerPeliculas = () => {
             // console.log(peliculas.slice(0, 15));
 
             mostrarPeliculas(peliculas.slice(0, 15));
-            mostrarPeliculasAccion(peliculas.slice(0, 15));
 
         });
 }
@@ -112,9 +111,20 @@ const mostrarPeliculas = (peliculas) => {
     }
 }
 
-const mostrarPeliculasAccion = (peliculas) => {
-    document.querySelector("#prueba").innerHTML = "";
+const mostrarPeliculasGeneros = (idGenero, nombreGenero) => {
+    let fila = document.createElement("div");
+    fila.id = `${idGenero}${nombreGenero}`;
+    fila.classList.add("row");
+    document.querySelector("#peliculasGeneros").append(fila);
 
+    let cabeceraSeccion = document.createElement("h1");
+    cabeceraSeccion.innerText = `${nombreGenero}`;
+    cabeceraSeccion.id = `${idGenero}`;
+    cabeceraSeccion.classList.add("text-white");
+    document.getElementById(`${idGenero}${nombreGenero}`).append(cabeceraSeccion);
+
+
+    document.getElementById(`${idGenero}${nombreGenero}`).innerHTML = "";
     //Mensaje de no hay resultados
     if (peliculas.length == 0) {
 
@@ -129,10 +139,8 @@ const mostrarPeliculasAccion = (peliculas) => {
         `;
 
         mensaje.innerHTML = sinResultados;
-        document.querySelector("#prueba").append(mensaje);
+        document.getElementById(`${idGenero}`).append(mensaje);
     }
-
-    let idGenero = 28;
 
     let filtrados = (idGenero == 0) ? peliculas : peliculas.filter((pelicula) => pelicula.genre_ids.includes(idGenero));
 
@@ -141,7 +149,7 @@ const mostrarPeliculasAccion = (peliculas) => {
         let carta = document.createElement("div");
 
         carta.classList.add("card", "mt-2", "mb-2", "ms-2", "p-0", "text-bg-dark")
-        carta.setAttribute("style", "width: 18rem;");
+        carta.setAttribute("style", "width: 15rem;");
 
         let card = `
             <div>
@@ -154,13 +162,13 @@ const mostrarPeliculasAccion = (peliculas) => {
                         <i class="fa fa-star" ></i>  
                     </div>
                 </div>
-                <h5 class="card-title text-white titulo">${pelicula.title}</h5>
-                <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-secondary centrado align-self-end m-1" id="${pelicula.id}">Detalles</a>
-            </div>               
+                <h5 class="card-title text-white titulo">${pelicula.title}</h5>                
+            </div> 
+            <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-secondary centrado align-self-end m-1" id="${pelicula.id}">Detalles</a>              
         `;
 
         carta.innerHTML = card;
-        document.querySelector("#prueba").append(carta);
+        document.getElementById(`${idGenero}${nombreGenero}`).append(carta);
     }
 }
 
@@ -216,8 +224,13 @@ let obtenerActores = async (pelicula) => {
 
 
 // Se ejecutan siempre que inicie la pagina para traer la info de la API.
-obtenerGeneros();
+
 obtenerPeliculas();
+obtenerGeneros().then(() => {
+    generos.forEach((e) => {
+        mostrarPeliculasGeneros(e.id, e.name);
+    });
+});
 //obtenerActores();
 
 document.querySelector("#searchInput").addEventListener("keyup", buscarPelicula)
@@ -225,14 +238,13 @@ resultados.addEventListener("click", mostrarDetalles);
 prueba.addEventListener("click", mostrarDetalles);
 
 
-
 // Codigo para el carrusel
-const slider = document.querySelector('.slider-inner');
-const progressBar = document.querySelector('.prog-bar-inner');
+const slider = document.querySelectorAll('.slider-inner');
+const progressBar = document.querySelectorAll('.prog-bar-inner');
 
 let sliderGrabbed = false;
 
-slider.parentElement.addEventListener('scroll', (e) => {
+/*slider.parentElement.addEventListener('scroll', (e) => {
     progressBar.style.width = `${getScrollPercentage()}%`
 })
 
@@ -263,4 +275,4 @@ slider.addEventListener('wheel', (e) => {
 
 function getScrollPercentage() {
     return ((slider.parentElement.scrollLeft / (slider.parentElement.scrollWidth - slider.parentElement.clientWidth)) * 100);
-}
+}*/
