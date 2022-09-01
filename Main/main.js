@@ -1,4 +1,5 @@
 
+//Variables y constantes
 let API_KEY = "00fc2bd5a54d4f3669c47b17c4d7cb3e";
 let peliculas;
 let generos = [];
@@ -11,58 +12,30 @@ const imagenModal = document.querySelector("#imagenModal");
 const actoresModal = document.querySelector("#actoresModal");
 
 
+// Funcion para obtener generos de la API
 const obtenerGeneros = async () => {
 
     await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=es-ES`)
         .then(response => response.json()).then((data) => {
 
-            // const todos = { id: 0, name: "Todos" }
-
-            //data.genres.unshift(todos);
             generos = data.genres;
-
-            // console.log(generos.slice(0, 15));
-
-            //mostrarGeneros(generos.slice(0, 15));
         });
 }
 
-const mostrarGeneros = (generos) => {
-    document.querySelector("#generos").innerHTML = "";
-
-    for (const genero of generos) {
-
-        let carta = document.createElement("div");
-
-        carta.classList.add("card", "mt-2", "mb-2", "ms-2", "text-bg-dark")
-        carta.setAttribute("style", "width: 15rem;");
-
-        let card = `
-            <div class="card-body">       
-                <h5 class="card-title titulo text-white"">${genero.name}</h5>
-            </div>               
-        `;
-
-        carta.innerHTML = card;
-        document.querySelector("#generos").append(carta);
-    }
-}
-
-
+// Funcion para obtener generos de la API
 const obtenerPeliculas = () => {
-
+    
     fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=es-ES&page=1&region=MX`)
         .then(response => response.json()).then((data) => {
 
             peliculas = data.results;
-
-            // console.log(peliculas.slice(0, 15));
 
             mostrarPeliculas(peliculas.slice(0, 15));
 
         });
 }
 
+// Funcion para mostrar las primeras 15 peliculas mas populares
 const mostrarPeliculas = (peliculas) => {
     document.querySelector("#resultados").innerHTML = "";
 
@@ -111,11 +84,15 @@ const mostrarPeliculas = (peliculas) => {
     }
 }
 
+// Funcion para mostrar peliculas ordenadas por genero de pelicula
 const mostrarPeliculasGeneros = (idGenero, nombreGenero) => {
+    
+    // Condicional para verificar que el row de generos incluya peliculas para poder mostrase
     if (!peliculas.find((e) => e.genre_ids.includes(idGenero))) {
         return;
     }
 
+    // Se crea el row slider que contendra las peliculas
     let fila = document.createElement("div");
     fila.classList.add("row");
     fila.id = `${idGenero}`
@@ -126,6 +103,7 @@ const mostrarPeliculasGeneros = (idGenero, nombreGenero) => {
                                 </div>
                             </div>
     `;
+
     fila.innerHTML = maquetaCarrusel;
     document.querySelector("#peliculasGeneros").append(fila);
 
@@ -135,6 +113,8 @@ const mostrarPeliculasGeneros = (idGenero, nombreGenero) => {
     cabeceraSeccion.classList.add("text-white");
     document.getElementById(`${idGenero}`).insertBefore(cabeceraSeccion, document.getElementById(`${idGenero}`).firstChild);
 
+    // Se filtran las peliculas por genero
+    // Se procede a crear el diseno de la card que contiene la info de las peliculas
 
     let filtrados = (idGenero == 0) ? peliculas : peliculas.filter((pelicula) => pelicula.genre_ids.includes(idGenero));
 
@@ -163,11 +143,12 @@ const mostrarPeliculasGeneros = (idGenero, nombreGenero) => {
 
         carta.innerHTML = card;
         document.getElementById(`${idGenero}${nombreGenero}`).append(carta);
+        //Se agrega un eventListener a los botones de cada card
         document.getElementById(`${idGenero}${nombreGenero}`).addEventListener("click", mostrarDetalles);
     }
 }
 
-
+// Funcion que muestra los detalles de una pelicula a traves de un modal al hacer click en boton
 const mostrarDetalles = (e) => {
     let id = e.target.getAttribute("id");
 
@@ -194,7 +175,7 @@ const mostrarDetalles = (e) => {
     }
 };
 
-
+// Funcion del campo de busqueda que busca y muestra las peliculas en base al texto escrito en el campo de busqueda.
 let buscarPelicula = (evt) => {
     let name = document.querySelector("#searchInput").value.toLowerCase();
 
@@ -205,9 +186,7 @@ let buscarPelicula = (evt) => {
     mostrarPeliculas(filtrados.slice(0, 15));
 }
 
-
-
-
+// Funcion para obtener los actores de la API de manera asincrona
 let obtenerActores = async (pelicula) => {
     await fetch(`https://api.themoviedb.org/3/movie/${pelicula}/credits?api_key=${API_KEY}&language=es-ES`)
         .then(response => response.json()).then((data) => {
@@ -216,22 +195,18 @@ let obtenerActores = async (pelicula) => {
         });
 }
 
-
-
 // Se ejecutan siempre que inicie la pagina para traer la info de la API.
-
 obtenerPeliculas();
+
 obtenerGeneros().then(() => {
     generos.forEach((e) => {
         mostrarPeliculasGeneros(e.id, e.name);
     });
 });
-//obtenerActores();
 
+// Se agregan eventListener para el campo de busqueda y los botones de peliculas populares
 document.querySelector("#searchInput").addEventListener("keyup", buscarPelicula)
 resultados.addEventListener("click", mostrarDetalles);
-//prueba.addEventListener("click", mostrarDetalles);
-
 
 // Codigo para el carrusel
 const slider = document.querySelectorAll('.slider-inner');

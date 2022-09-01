@@ -25,6 +25,7 @@
 </head>
 
 <body>
+    <!-- Contenedor principal -->
     <div class="container-fluid">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-dark ">
@@ -175,8 +176,8 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="/Index/index.html" id="navbarDropdown" role="button"
-                                data-mdb-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="/Index/index.html" id="navbarDropdown"
+                                role="button" data-mdb-toggle="dropdown" aria-expanded="false">
                                 <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(2).jpg"
                                     class="rounded-circle img-fluid" height='25' width='25'>
                             </a>
@@ -218,7 +219,7 @@
                 <img src="../img/banner1.jpg" alt="" srcset="" class="banner">
             </div>
         </div>
-
+        <!-- Div de las peliculas populares -->
         <div class="col">
             <div class="row" id="movieGenresSection">
                 <h1 id="gen">Populares en netflix</h1>
@@ -227,7 +228,7 @@
                 </div>
             </div>
         </div>
-
+        <!-- Div de las peliculas filtradas por generos -->
         <div class="col" id="peliculasGeneros"></div>
 
 
@@ -250,10 +251,30 @@
                     </div>
                 </div>
             </div>
-
-
-
         </div>
+
+        <footer class="footer">
+            <div class="footercontainer">
+                <p class="textofooter">
+                    ¿Preguntas? Llama al 800-062-2406
+                </p>
+                <ul class="footerlinks">
+                    <li class="linkfooter"><a href="">Preguntas frecuentes</a></li>
+                    <li class="linkfooter"><a href="">Centro de ayuda</a></li>
+                    <li class="linkfooter"><a href="">Términos de uso</a></li>
+                    <li class="linkfooter"><a href="">Privacidad</a></li>
+                    <li class="linkfooter"><a href="">Preferencias de cookies</a></li>
+                    <li class="linkfooter"><a href="">Información corporativa</a></li>
+                </ul>
+                <select class="idioma" name="idioma" id="">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+        </footer>
+
+ </div>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
             crossorigin="anonymous"></script>
