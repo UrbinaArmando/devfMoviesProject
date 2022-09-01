@@ -220,8 +220,8 @@
         </div>
 
         <div class="col">
-            <div class="row" id="movieGenresSection">
-                <h1 id="gen">Populares en netflix</h1>
+            <div class="row" id="movieSection">
+                <h1 id="pel">Populares en Netflix</h1>
                 <div id="resultados" class="row justify-content-center">
 
                 </div>
@@ -231,51 +231,31 @@
         <div class="col">
             <div class="row" id="movieGenresSection">
                 <h1 id="gen">Generos</h1>
-                <div id="genero" class="row justify-content-center">
+                <div id="generos" class="row justify-content-center">
 
                 </div>
             </div>
         </div>
 
-        
-
-        <div class="col">
-            <div class="row" id="movieSectionPrueba">
-                <h1 id="pel">Accion</h1>
-                
-
-                <div class="slider-wrap">
-                    <div class="slider">
-                        <div class="slider-inner" id="prueba">
-                                            
+        <!-- Modal con info de pelicula -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-white" id="tituloModal"></h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <img id="imagenModal">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-9" id="contenidoModal"></div>
+                            <div class="col-3" id="actoresModal"></div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
-
-       
-
- <!-- Modal con info de pelicula -->
- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content bg-dark text-white">
-            <div class="modal-header">
-                <h5 class="modal-title text-white" id="tituloModal"></h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <img id="imagenModal">
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-9" id="contenidoModal"></div>
-                    <div class="col-3" id="actoresModal"></div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 
