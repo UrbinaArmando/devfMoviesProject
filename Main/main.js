@@ -16,7 +16,7 @@ const obtenerGeneros = () => {
     fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=es-ES`)
         .then(response => response.json()).then((data) => {
 
-           // const todos = { id: 0, name: "Todos" }
+            // const todos = { id: 0, name: "Todos" }
 
             //data.genres.unshift(todos);
             generos = data.genres;
@@ -102,9 +102,9 @@ const mostrarPeliculas = (peliculas) => {
                         <i class="fa fa-star" ></i>  
                     </div>
                 </div>
-                <h5 class="card-title text-white titulo">${pelicula.title}</h5>
-                <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-secondary centrado align-self-end m-1" id="${pelicula.id}">Detalles</a>
-            </div>               
+                <h5 class="card-title text-white titulo">${pelicula.title}</h5>              
+            </div>
+            <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-secondary centrado align-self-end m-1" id="${pelicula.id}">Detalles</a>               
         `;
 
         carta.innerHTML = card;
@@ -134,7 +134,7 @@ const mostrarPeliculasAccion = (peliculas) => {
 
     let idGenero = 28;
 
-    let filtrados = (idGenero == 0) ? peliculas :  peliculas.filter( (pelicula) => pelicula.genre_ids.includes(idGenero));
+    let filtrados = (idGenero == 0) ? peliculas : peliculas.filter((pelicula) => pelicula.genre_ids.includes(idGenero));
 
     for (const pelicula of filtrados) {
 
