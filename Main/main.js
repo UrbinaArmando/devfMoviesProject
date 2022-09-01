@@ -154,9 +154,9 @@ const mostrarPeliculasAccion = (peliculas) => {
                         <i class="fa fa-star" ></i>  
                     </div>
                 </div>
-                <h5 class="card-title text-white titulo">${pelicula.title}</h5>
-                <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-secondary centrado align-self-end m-1" id="${pelicula.id}">Detalles</a>
-            </div>               
+                <h5 class="card-title text-white titulo">${pelicula.title}</h5>      
+            </div>    
+            <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-secondary centrado align-self-end m-1" id="${pelicula.id}">Detalles</a>           
         `;
 
         carta.innerHTML = card;
@@ -227,7 +227,8 @@ prueba.addEventListener("click", mostrarDetalles);
 
 
 // Codigo para el carrusel
-const slider = document.querySelector('.slider-inner');
+const slider = document.querySelectorAll('.slider-inner');
+console.log(slider);
 const progressBar = document.querySelector('.prog-bar-inner');
 
 let sliderGrabbed = false;
@@ -264,3 +265,40 @@ slider.addEventListener('wheel', (e) => {
 function getScrollPercentage() {
     return ((slider.parentElement.scrollLeft / (slider.parentElement.scrollWidth - slider.parentElement.clientWidth)) * 100);
 }
+
+
+// // Codigo para el carrusel
+// const slider1 = document.querySelectorAll('.slider-inner1');
+
+// let sliderGrabbed1 = false;
+
+
+
+// slider1.addEventListener('mousedown', (e) => {
+//     sliderGrabbed1 = true;
+//     slider1.style.cursor = 'grabbing';
+// })
+
+// slider1.addEventListener('mouseup', (e) => {
+//     sliderGrabbed1 = false;
+//     slider1.style.cursor = 'grab';
+// })
+
+// slider1.addEventListener('mouseleave', (e) => {
+//     sliderGrabbed1 = false;
+// })
+
+// slider1.addEventListener('mousemove', (e) => {
+//     if (sliderGrabbed1) {
+//         slider1.parentElement.scrollLeft -= e.movementX;
+//     }
+// })
+
+// slider1.addEventListener('wheel', (e) => {
+//     e.preventDefault()
+//     slider1.parentElement.scrollLeft += e.deltaY;
+// })
+
+// function getScrollPercentage() {
+//     return ((slider1.parentElement.scrollLeft / (slider1.parentElement.scrollWidth - slider1.parentElement.clientWidth)) * 100);
+// }

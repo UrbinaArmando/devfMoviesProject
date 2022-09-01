@@ -112,7 +112,7 @@ h1 {
   overflow: scroll;
 }
 
-.slider-inner {
+.slider-inner,.slider-inner1  {
   position: relative;
   display: flex;
   justify-content: space-around;
@@ -152,3 +152,4 @@ h1 {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
