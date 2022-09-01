@@ -75,7 +75,7 @@ const mostrarPeliculas = (peliculas) => {
         mensaje.setAttribute("style", "width: 100rem; height: 150rem; text-align: center;");
 
         let sinResultados = `
-            <img src="assets/empty-box-256.png" class="img" alt="...">
+         <i class="fa fa-video"></i>
             <h1 id="pel">No hay resultados.....</h1>             
         `;
 
