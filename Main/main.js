@@ -39,7 +39,7 @@ const mostrarGeneros = (generos) => {
 
         let card = `
             <div class="card-body">       
-                <h5 class="card-title titulo text-white">${genero.name}</h5>
+                <h5 class="card-title titulo text-white"">${genero.name}</h5>
             </div>               
         `;
 
@@ -89,7 +89,7 @@ const mostrarPeliculas = (peliculas) => {
         let carta = document.createElement("div");
 
         carta.classList.add("card", "mt-2", "mb-2", "ms-2", "p-0", "text-bg-dark")
-        carta.setAttribute("style", "width: 15rem;");
+        carta.setAttribute("style", "width: 18rem;");
 
         let card = `
             <div>
@@ -190,6 +190,7 @@ const mostrarDetalles = (e) => {
         imagenModal.setAttribute("src", `https://image.tmdb.org/t/p/original/${backdrop_path}`);
     }
 };
+
 
 let buscarPelicula = (evt) => {
     let name = document.querySelector("#searchInput").value.toLowerCase();
