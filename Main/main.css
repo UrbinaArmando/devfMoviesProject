@@ -98,7 +98,7 @@ h1 {
   top: 10%;
   left: 5%;
   width: 90%;
-  height: 700px;
+  height: 500px;
   border: 1px solid rgba(255,255,255,0);
   cursor: grab;
 }
@@ -115,7 +115,7 @@ h1 {
 .slider-inner,.slider-inner1  {
   position: relative;
   display: flex;
-  justify-content: space-around;
+  justify-content:left;
   top: 0;
   left: 0;
   width: 3000px;

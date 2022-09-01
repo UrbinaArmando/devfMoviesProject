@@ -1,7 +1,7 @@
 
 let API_KEY = "00fc2bd5a54d4f3669c47b17c4d7cb3e";
 let peliculas;
-let generos;
+let generos = [];
 let actores;
 let carta;
 
@@ -11,9 +11,9 @@ const imagenModal = document.querySelector("#imagenModal");
 const actoresModal = document.querySelector("#actoresModal");
 
 
-const obtenerGeneros = () => {
+const obtenerGeneros = async () => {
 
-    fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=es-ES`)
+    await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=es-ES`)
         .then(response => response.json()).then((data) => {
 
             // const todos = { id: 0, name: "Todos" }
@@ -23,7 +23,7 @@ const obtenerGeneros = () => {
 
             // console.log(generos.slice(0, 15));
 
-            mostrarGeneros(generos.slice(0, 15));
+            //mostrarGeneros(generos.slice(0, 15));
         });
 }
 
@@ -59,7 +59,6 @@ const obtenerPeliculas = () => {
             // console.log(peliculas.slice(0, 15));
 
             mostrarPeliculas(peliculas.slice(0, 15));
-            mostrarPeliculasAccion(peliculas.slice(0, 15));
 
         });
 }
@@ -112,27 +111,30 @@ const mostrarPeliculas = (peliculas) => {
     }
 }
 
-const mostrarPeliculasAccion = (peliculas) => {
-    document.querySelector("#prueba").innerHTML = "";
-
-    //Mensaje de no hay resultados
-    if (peliculas.length == 0) {
-
-        let mensaje = document.createElement("div");
-
-        mensaje.classList.add("mt-2", "mb-2", "ms-2")
-        mensaje.setAttribute("style", "width: 100rem; height: 150rem; text-align: center;");
-
-        let sinResultados = `
-            <img src="assets/empty-box-256.png" class="img" alt="...">
-            <h1 id="pel">No hay resultados.....</h1>             
-        `;
-
-        mensaje.innerHTML = sinResultados;
-        document.querySelector("#prueba").append(mensaje);
+const mostrarPeliculasGeneros = (idGenero, nombreGenero) => {
+    if (!peliculas.find((e) => e.genre_ids.includes(idGenero))) {
+        return;
     }
 
-    let idGenero = 28;
+    let fila = document.createElement("div");
+    fila.classList.add("row");
+    fila.id = `${idGenero}`
+    let maquetaCarrusel = ` <div class="slider-wrap">
+                                 <div class="slider">
+                                    <div class="slider-inner" id="${idGenero}${nombreGenero}">
+                                    </div>
+                                </div>
+                            </div>
+    `;
+    fila.innerHTML = maquetaCarrusel;
+    document.querySelector("#peliculasGeneros").append(fila);
+
+    let cabeceraSeccion = document.createElement("h1");
+    cabeceraSeccion.innerText = `${nombreGenero}`;
+    cabeceraSeccion.id = `${idGenero}`;
+    cabeceraSeccion.classList.add("text-white");
+    document.getElementById(`${idGenero}`).insertBefore(cabeceraSeccion, document.getElementById(`${idGenero}`).firstChild);
+
 
     let filtrados = (idGenero == 0) ? peliculas : peliculas.filter((pelicula) => pelicula.genre_ids.includes(idGenero));
 
@@ -141,7 +143,7 @@ const mostrarPeliculasAccion = (peliculas) => {
         let carta = document.createElement("div");
 
         carta.classList.add("card", "mt-2", "mb-2", "ms-2", "p-0", "text-bg-dark")
-        carta.setAttribute("style", "width: 18rem;");
+        carta.setAttribute("style", "width: 15rem;");
 
         let card = `
             <div>
@@ -154,13 +156,14 @@ const mostrarPeliculasAccion = (peliculas) => {
                         <i class="fa fa-star" ></i>  
                     </div>
                 </div>
-                <h5 class="card-title text-white titulo">${pelicula.title}</h5>      
-            </div>    
-            <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-secondary centrado align-self-end m-1" id="${pelicula.id}">Detalles</a>           
+                <h5 class="card-title text-white titulo">${pelicula.title}</h5>                
+            </div> 
+            <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-secondary centrado align-self-end m-1" id="${pelicula.id}">Detalles</a>              
         `;
 
         carta.innerHTML = card;
-        document.querySelector("#prueba").append(carta);
+        document.getElementById(`${idGenero}${nombreGenero}`).append(carta);
+        document.getElementById(`${idGenero}${nombreGenero}`).addEventListener("click", mostrarDetalles);
     }
 }
 
@@ -216,89 +219,71 @@ let obtenerActores = async (pelicula) => {
 
 
 // Se ejecutan siempre que inicie la pagina para traer la info de la API.
-obtenerGeneros();
+
 obtenerPeliculas();
+obtenerGeneros().then(() => {
+    generos.forEach((e) => {
+        mostrarPeliculasGeneros(e.id, e.name);
+    });
+});
 //obtenerActores();
 
 document.querySelector("#searchInput").addEventListener("keyup", buscarPelicula)
 resultados.addEventListener("click", mostrarDetalles);
-prueba.addEventListener("click", mostrarDetalles);
-
+//prueba.addEventListener("click", mostrarDetalles);
 
 
 // Codigo para el carrusel
 const slider = document.querySelectorAll('.slider-inner');
-console.log(slider);
-const progressBar = document.querySelector('.prog-bar-inner');
+const progressBar = document.querySelectorAll('.prog-bar-inner');
 
 let sliderGrabbed = false;
 
-slider.parentElement.addEventListener('scroll', (e) => {
-    progressBar.style.width = `${getScrollPercentage()}%`
+slider.forEach((e) => {
+    e.parentElement.addEventListener('scroll', (e) => {
+        progressBar.style.width = `${getScrollPercentage()}%`
+    })
 })
 
-slider.addEventListener('mousedown', (e) => {
-    sliderGrabbed = true;
-    slider.style.cursor = 'grabbing';
+slider.forEach((e) => {
+    e.addEventListener('mousedown', (e) => {
+        sliderGrabbed = true;
+        slider.style.cursor = 'grabbing';
+    })
 })
 
-slider.addEventListener('mouseup', (e) => {
-    sliderGrabbed = false;
-    slider.style.cursor = 'grab';
+slider.forEach((e) => {
+    e.addEventListener('mouseup', (e) => {
+        sliderGrabbed = false;
+        slider.style.cursor = 'grab';
+    })
 })
 
-slider.addEventListener('mouseleave', (e) => {
-    sliderGrabbed = false;
+slider.forEach((e) => {
+    e.addEventListener('mouseleave', (e) => {
+        sliderGrabbed = false;
+    })
 })
 
-slider.addEventListener('mousemove', (e) => {
-    if (sliderGrabbed) {
-        slider.parentElement.scrollLeft -= e.movementX;
-    }
+slider.forEach((e) => {
+    e.addEventListener('mousemove', (e) => {
+        if (sliderGrabbed) {
+            slider.parentElement.scrollLeft -= e.movementX;
+        }
+    })
 })
 
-slider.addEventListener('wheel', (e) => {
-    e.preventDefault()
-    slider.parentElement.scrollLeft += e.deltaY;
+slider.forEach((e) => {
+    addEventListener('wheel', (e) => {
+        e.preventDefault()
+        slider.parentElement.scrollLeft += e.deltaY;
+    })
 })
 
-function getScrollPercentage() {
+slider.forEach((e) => {
+    ((e.parentElement.scrollLeft / (e.parentElement.scrollWidth - e.parentElement.clientWidth)) * 100)
+})
+
+/*function getScrollPercentage() {
     return ((slider.parentElement.scrollLeft / (slider.parentElement.scrollWidth - slider.parentElement.clientWidth)) * 100);
-}
-
-
-// // Codigo para el carrusel
-// const slider1 = document.querySelectorAll('.slider-inner1');
-
-// let sliderGrabbed1 = false;
-
-
-
-// slider1.addEventListener('mousedown', (e) => {
-//     sliderGrabbed1 = true;
-//     slider1.style.cursor = 'grabbing';
-// })
-
-// slider1.addEventListener('mouseup', (e) => {
-//     sliderGrabbed1 = false;
-//     slider1.style.cursor = 'grab';
-// })
-
-// slider1.addEventListener('mouseleave', (e) => {
-//     sliderGrabbed1 = false;
-// })
-
-// slider1.addEventListener('mousemove', (e) => {
-//     if (sliderGrabbed1) {
-//         slider1.parentElement.scrollLeft -= e.movementX;
-//     }
-// })
-
-// slider1.addEventListener('wheel', (e) => {
-//     e.preventDefault()
-//     slider1.parentElement.scrollLeft += e.deltaY;
-// })
-
-// function getScrollPercentage() {
-//     return ((slider1.parentElement.scrollLeft / (slider1.parentElement.scrollWidth - slider1.parentElement.clientWidth)) * 100);
-// }
+}*/
