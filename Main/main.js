@@ -89,7 +89,7 @@ const mostrarPeliculas = (peliculas) => {
         let carta = document.createElement("div");
 
         carta.classList.add("card", "mt-2", "mb-2", "ms-2", "p-0", "text-bg-dark")
-        carta.setAttribute("style", "width: 18rem;");
+        carta.setAttribute("style", "width: 15rem;");
 
         let card = `
             <div>
